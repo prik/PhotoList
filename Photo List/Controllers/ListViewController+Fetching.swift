@@ -11,13 +11,13 @@ extension ListViewController {
     func fetchPhotos() {
         // Don't show 2 loaders simultaneously
         if !self.photoList.refreshControl!.isRefreshing {
-            LoadingHUD.showLoadingHUD(forView: view)
+            LoadingHUD.show(forView: view)
         }
         
         ApiService().fetchPhotos { [weak self] result in
             guard let self = self else { return }
             
-            LoadingHUD.hideLoadingHUD(forView: self.view)
+            LoadingHUD.hide(forView: self.view)
             
             switch result {
             case .success(let photos):

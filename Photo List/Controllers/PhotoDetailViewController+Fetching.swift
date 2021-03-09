@@ -13,13 +13,13 @@ extension PhotoDetailViewController {
         
         // Don't show 2 loaders simultaneously
         if !self.commentList.refreshControl!.isRefreshing {
-            LoadingHUD.showLoadingHUD(forView: commentList)
+            LoadingHUD.show(forView: commentList)
         }
         
         ApiService().fetchComments(forPhotoId: viewModel!.id) { [weak self] result in
             guard let self = self else { return }
             
-            LoadingHUD.hideLoadingHUD(forView: self.commentList)
+            LoadingHUD.hide(forView: self.commentList)
             
             switch result {
             case .success(let comments):

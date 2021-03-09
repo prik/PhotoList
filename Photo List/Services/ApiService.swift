@@ -13,9 +13,7 @@ class ApiService {
     private let apiBaseUrl = "https://jsonplaceholder.typicode.com"
     
     func fetchPhotos(completed: @escaping (Result<[Photo], Error>) -> Void) {
-        
         AF.request(self.apiBaseUrl + "/photos").responseDecodable(of: [Photo].self) { response in
-
             guard let photos = response.value else {
                 completed(.failure(response.error!))
                 return
@@ -23,13 +21,11 @@ class ApiService {
             
             completed(.success(photos))
         }
-        
     }
     
     
     func fetchComments(forPhotoId photoId: Int, completed: @escaping (Result<[Comment], Error>) -> Void) {
         AF.request(self.apiBaseUrl + "/photos/" + String(photoId) + "/comments").responseDecodable(of: [Comment].self) { response in
-
             guard let comments = response.value else {
                 completed(.failure(response.error!))
                 return

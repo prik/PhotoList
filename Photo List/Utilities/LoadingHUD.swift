@@ -9,12 +9,12 @@ import UIKit
 import MBProgressHUD
 
 struct LoadingHUD {
-    static func showLoadingHUD(forView view: UIView) {
+    static func show(forView view: UIView) {
         let hud = MBProgressHUD.showAdded(to: view, animated: true)
         hud.label.text = "Loading..."
     }
 
-    static func hideLoadingHUD(forView view: UIView) {
+    static func hide(forView view: UIView) {
         MBProgressHUD.hide(for: view, animated: true)
     }
 }
