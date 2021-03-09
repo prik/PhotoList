@@ -1,6 +1,6 @@
 # PhotoList
 
-My first app created entirely in code, so without using the Storyboard.
+My first iOS app created entirely in code, so without using the Storyboard.
 
 ## Features
 
