@@ -30,5 +30,6 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         let viewModel = PhotoDetailViewControllerViewModel(model: photos[tableView.indexPathForSelectedRow!.row])
         photoDetail.configureViewModel(with: viewModel)
         navigationController?.pushViewController(photoDetail, animated: true)
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .none
     }
 }
