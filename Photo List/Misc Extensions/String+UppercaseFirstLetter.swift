@@ -1,5 +1,5 @@
 //
-//  String+Helpers.swift
+//  String+UppercaseFirstLetter.swift
 //  Photo List
 //
 //  Created by Nick Koster on 08/03/2021.

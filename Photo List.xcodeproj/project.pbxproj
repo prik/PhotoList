@@ -23,7 +23,7 @@
 		A1787F0025F6A0CA00A0B07B /* PhotoDetailViewController+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1787EFF25F6A0CA00A0B07B /* PhotoDetailViewController+Delegates.swift */; };
 		A1787F0525F6A57300A0B07B /* ListViewController+RefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1787F0425F6A57300A0B07B /* ListViewController+RefreshControl.swift */; };
 		A1787F0925F6A82100A0B07B /* PhotoDetailViewController+RefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1787F0825F6A82100A0B07B /* PhotoDetailViewController+RefreshControl.swift */; };
-		A1787F0C25F6D46800A0B07B /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1787F0B25F6D46800A0B07B /* String+Helpers.swift */; };
+		A1787F0C25F6D46800A0B07B /* String+UppercaseFirstLetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1787F0B25F6D46800A0B07B /* String+UppercaseFirstLetter.swift */; };
 		A1787F1825F6F46B00A0B07B /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1787F1725F6F46B00A0B07B /* LoadingHUD.swift */; };
 		A1787F1B25F7120C00A0B07B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1787F1A25F7120C00A0B07B /* Alert.swift */; };
 		A1787F2625F71D2300A0B07B /* ListViewController+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1787F2525F71D2300A0B07B /* ListViewController+Fetching.swift */; };
@@ -54,7 +54,7 @@
 		A1787EFF25F6A0CA00A0B07B /* PhotoDetailViewController+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoDetailViewController+Delegates.swift"; sourceTree = "<group>"; };
 		A1787F0425F6A57300A0B07B /* ListViewController+RefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewController+RefreshControl.swift"; sourceTree = "<group>"; };
 		A1787F0825F6A82100A0B07B /* PhotoDetailViewController+RefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoDetailViewController+RefreshControl.swift"; sourceTree = "<group>"; };
-		A1787F0B25F6D46800A0B07B /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
+		A1787F0B25F6D46800A0B07B /* String+UppercaseFirstLetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+UppercaseFirstLetter.swift"; sourceTree = "<group>"; };
 		A1787F1725F6F46B00A0B07B /* LoadingHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		A1787F1A25F7120C00A0B07B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		A1787F2525F71D2300A0B07B /* ListViewController+Fetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewController+Fetching.swift"; sourceTree = "<group>"; };
@@ -86,6 +86,15 @@
 				01A2D2EAF1CDD765EA49D132 /* Pods_Photo_List.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A116CA5425FFE0220025D040 /* Misc Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A1787EDF25F66E1F00A0B07B /* UIImageView+SetImage.swift */,
+				A1787F0B25F6D46800A0B07B /* String+UppercaseFirstLetter.swift */,
+			);
+			path = "Misc Extensions";
 			sourceTree = "<group>";
 		};
 		A14B0FD325F728F700EBA138 /* Models */ = {
@@ -145,8 +154,6 @@
 			children = (
 				A1787F1A25F7120C00A0B07B /* Alert.swift */,
 				A1787F1725F6F46B00A0B07B /* LoadingHUD.swift */,
-				A1787F0B25F6D46800A0B07B /* String+Helpers.swift */,
-				A1787EDF25F66E1F00A0B07B /* UIImageView+SetImage.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -172,6 +179,7 @@
 		A190101C25F6673200E5EB65 /* Photo List */ = {
 			isa = PBXGroup;
 			children = (
+				A116CA5425FFE0220025D040 /* Misc Extensions */,
 				A14B0FD825F729D600EBA138 /* Utilities */,
 				A14B0FD325F728F700EBA138 /* Models */,
 				A14B0FD625F7291500EBA138 /* ViewModels */,
@@ -314,7 +322,7 @@
 				A1787F0025F6A0CA00A0B07B /* PhotoDetailViewController+Delegates.swift in Sources */,
 				A1787EF725F69B5000A0B07B /* ListViewController+Delegates.swift in Sources */,
 				A1787EE125F66E1F00A0B07B /* Comment.swift in Sources */,
-				A1787F0C25F6D46800A0B07B /* String+Helpers.swift in Sources */,
+				A1787F0C25F6D46800A0B07B /* String+UppercaseFirstLetter.swift in Sources */,
 				A1787EE025F66E1F00A0B07B /* PhotoCell.swift in Sources */,
 				A1787F1825F6F46B00A0B07B /* LoadingHUD.swift in Sources */,
 				A190101E25F6673200E5EB65 /* AppDelegate.swift in Sources */,
