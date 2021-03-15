@@ -15,7 +15,12 @@ extension UIImageView {
             switch result {
             case .success(_):
                 break
-            case .failure(_):
+            case .failure(let error):
+                // Make sure that we only set the error image when there is a download error
+                if error.isTaskCancelled || error.isNotCurrentTask {
+                    return
+                }
+
                 self.image = UIImage(systemName: "wifi.slash")
             }
         }
