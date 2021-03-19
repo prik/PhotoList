@@ -19,7 +19,7 @@ extension PhotoDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.commentCell) as! CommentCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.identifier) as! CommentCell
         let viewModel = CommentCellViewModel(model: comments[indexPath.row])
         cell.configureViewModel(with: viewModel)
         return cell

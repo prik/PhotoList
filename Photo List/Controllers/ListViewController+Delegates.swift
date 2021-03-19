@@ -19,7 +19,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.photoCell) as! PhotoCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: PhotoCell.identifier) as! PhotoCell
         let viewModel = PhotoCellViewModel(model: photos[indexPath.row])
         cell.configureViewModel(with: viewModel)
         return cell

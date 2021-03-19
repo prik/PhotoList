@@ -38,7 +38,7 @@ class PhotoDetailViewController: UIViewController {
         table.rowHeight = UITableView.automaticDimension
         table.rowHeight = 130 // Somehow I cannot get dynamic height to work
         table.contentInset = UIEdgeInsets.init(top: 5.0, left: 0.0, bottom: 5.0, right: 0.0)
-        table.register(CommentCell.self, forCellReuseIdentifier: CellIdentifier.commentCell)
+        table.register(CommentCell.self, forCellReuseIdentifier: CommentCell.identifier)
         return table
     }()
     

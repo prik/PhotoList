@@ -10,6 +10,8 @@ import PureLayout
 
 class PhotoCell: UITableViewCell {
     
+    static let identifier = String(describing: self)
+    
     // MARK: - Properties
     private var viewModel: PhotoCellViewModel?
     

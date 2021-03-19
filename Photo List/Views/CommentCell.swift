@@ -9,6 +9,8 @@ import UIKit
 
 class CommentCell: UITableViewCell {
     
+    static let identifier = String(describing: self)
+    
     // MARK: - Properties
     private var viewModel: CommentCellViewModel?
     

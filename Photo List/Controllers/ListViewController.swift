@@ -16,7 +16,7 @@ class ListViewController: UIViewController {
         let table = UITableView()
         table.separatorStyle = .none
         table.rowHeight = 100
-        table.register(PhotoCell.self, forCellReuseIdentifier: CellIdentifier.photoCell)
+        table.register(PhotoCell.self, forCellReuseIdentifier: PhotoCell.identifier)
         return table
     }()
     
