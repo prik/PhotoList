@@ -37,8 +37,6 @@ class PhotoCell: UITableViewCell {
                 
         configurePhotoImage()
         configurePhotoTitle()
-        
-        // setNeedsUpdateConstraints() // PureLayout is sadly not working
     }
     
     required init?(coder: NSCoder) {
@@ -56,31 +54,20 @@ class PhotoCell: UITableViewCell {
     private func configurePhotoImage() {
         addSubview(photoImage)
 
-        photoImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        photoImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12).isActive = true
-        photoImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        photoImage.widthAnchor.constraint(equalToConstant: 115).isActive = true
+        photoImage.autoAlignAxis(toSuperviewAxis: .horizontal)
+        photoImage.autoPinEdge(.leading, to: .leading, of: self, withOffset: 12.0)
+        photoImage.autoSetDimension(.height, toSize: 80.0)
+        photoImage.autoSetDimension(.width, toSize: 115.0)
     }
 
     private func configurePhotoTitle() {
         addSubview(photoTitle)
         
-        photoTitle.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        photoTitle.leadingAnchor.constraint(equalTo: photoImage.trailingAnchor, constant: 20).isActive = true
-        photoTitle.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        photoTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
+        photoTitle.autoAlignAxis(toSuperviewAxis: .horizontal)
+        photoTitle.autoPinEdge(.leading, to: .trailing, of: photoImage, withOffset: 20.0)
+        photoTitle.autoSetDimension(.height, toSize: 80.0)
+        photoTitle.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -12.0)
     }
-    
-    // I tried to use PureLayout, but somehow it just wouldn't work. The constraints were all off.
-    // Leaving the code here for review
-//    override func updateConstraints() {
-//        photoImage.autoAlignAxis(toSuperviewAxis: .vertical)
-//        photoImage.autoPinEdge(.leading, to: .leading, of: self, withOffset: 12.0)
-//        photoImage.autoSetDimension(.height, toSize: 80.0)
-//        photoImage.autoSetDimension(.width, toSize: 115.0)
-//
-//        super.updateConstraints()
-//    }
     
     override func prepareForReuse() {
         super.prepareForReuse()

@@ -53,35 +53,36 @@ class CommentCell: UITableViewCell {
     func configureViewModel(with viewModel: CommentCellViewModel) {
         self.viewModel = viewModel
         
+        idLabel.text = String(viewModel.id)
         nameLabel.text = self.viewModel?.name.uppercaseFirstLetter()
         commentLabel.text = self.viewModel?.body.uppercaseFirstLetter()
     }
     
     private func configureIdLabel() {
         addSubview(idLabel)
-
-        idLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        idLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        idLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
-        idLabel.widthAnchor.constraint(equalToConstant: 13.0).isActive = true
+        
+        idLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        idLabel.autoPinEdge(.leading, to: .leading, of: contentView)
+        idLabel.autoMatch(.height, to: .height, of: contentView)
+        idLabel.autoSetDimension(.width, toSize: 13.0)
     }
     
     private func configureNameLabel() {
         addSubview(nameLabel)
 
-        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6.0).isActive = true
-        nameLabel.leadingAnchor.constraint(equalTo: idLabel.trailingAnchor, constant: 10.0).isActive = true
-        nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: 15.0).isActive = true
+        nameLabel.autoPinEdge(.top, to: .top, of: contentView, withOffset: 6.0)
+        nameLabel.autoPinEdge(.leading, to: .trailing, of: idLabel, withOffset: 10.0)
+        nameLabel.autoPinEdge(.trailing, to: .trailing, of: contentView)
+        nameLabel.autoSetDimension(.height, toSize: 15.0)
     }
     
     private func configureCommentLabel() {
         addSubview(commentLabel)
         
-        commentLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 1.0).isActive = true
-        commentLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        commentLabel.leadingAnchor.constraint(equalTo: idLabel.trailingAnchor, constant: 10.0).isActive = true
-        commentLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -23.0).isActive = true
+        commentLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        commentLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 1.0)
+        commentLabel.autoPinEdge(.leading, to: .trailing, of: idLabel, withOffset: 10.0)
+        commentLabel.autoMatch(.width, to: .width, of: contentView, withOffset: -23.0)
     }
     
     override func prepareForReuse() {

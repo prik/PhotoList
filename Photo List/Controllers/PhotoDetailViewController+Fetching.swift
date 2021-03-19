@@ -25,7 +25,6 @@ extension PhotoDetailViewController {
             case .success(let comments):
                 DispatchQueue.main.async {
                     self.updateCommentList(with: comments)
-                    
                 }
             case .failure(_):
                 let alert = Alert.error(withMessage: "A problem occurred while fetching the images. Make sure that you are connected to the internet.")

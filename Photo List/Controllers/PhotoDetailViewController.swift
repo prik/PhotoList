@@ -64,11 +64,11 @@ class PhotoDetailViewController: UIViewController {
         view.addSubview(photoImage)
 
         photoImage.setImage(imageUrl: viewModel!.imageUrl)
-
-        photoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        photoImage.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        photoImage.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        photoImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        photoImage.autoPinEdge(toSuperviewSafeArea: .top)
+        photoImage.autoPinEdge(.leading, to: .leading, of: view)
+        photoImage.autoPinEdge(.trailing, to: .trailing, of: view)
+        photoImage.autoSetDimension(.height, toSize: 300.0)
     }
     
     func configurePhotoTitle() {
@@ -76,10 +76,10 @@ class PhotoDetailViewController: UIViewController {
 
         photoTitle.text = viewModel!.title.uppercaseFirstLetter()
         
-        photoTitle.topAnchor.constraint(equalTo: photoImage.bottomAnchor, constant: 0.0).isActive = true
-        photoTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10.0).isActive = true
-        photoTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10.0).isActive = true
-        photoTitle.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        photoTitle.autoPinEdge(.top, to: .bottom, of: photoImage)
+        photoTitle.autoPinEdge(.leading, to: .leading, of: view, withOffset: 10.0)
+        photoTitle.autoPinEdge(.trailing, to: .trailing, of: view, withOffset: -10.0)
+        photoTitle.autoSetDimension(.height, toSize: 80.0)
     }
     
     func configureCommentLabel() {
@@ -87,19 +87,17 @@ class PhotoDetailViewController: UIViewController {
         
         commentsLabel.text = "Comments"
         
-        commentsLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 23.0).isActive = true
-        commentsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        commentsLabel.heightAnchor.constraint(equalToConstant: 13.0).isActive = true
-        commentsLabel.bottomAnchor.constraint(equalTo: commentList.topAnchor, constant: -7.5).isActive = true
+        commentsLabel.autoPinEdge(.leading, to: .leading, of: view, withOffset: 23.0)
+        commentsLabel.autoPinEdge(.trailing, to: .trailing, of: view)
+        commentsLabel.autoSetDimension(.height, toSize: 13.0)
+        commentsLabel.autoPinEdge(.bottom, to: .top, of: commentList, withOffset: -7.5)
     }
     
     func configureCommentList() {
         view.addSubview(commentList)
         
-        commentList.topAnchor.constraint(equalTo: photoTitle.bottomAnchor, constant: 15.0).isActive = true
-        commentList.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        commentList.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-        commentList.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        commentList.autoPinEdge(.top, to: .bottom, of: photoTitle, withOffset: 15.0)
+        commentList.autoPinEdges(toSuperviewMarginsExcludingEdge: .top)
         
         setCommentListDelegates()
     }
