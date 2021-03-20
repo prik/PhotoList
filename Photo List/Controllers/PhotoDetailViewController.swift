@@ -61,9 +61,11 @@ class PhotoDetailViewController: UIViewController {
     }
    
     func configurePhotoImage() {
+        guard let imageUrl = viewModel?.imageUrl else { return }
+
         view.addSubview(photoImage)
 
-        photoImage.setImage(imageUrl: viewModel!.imageUrl)
+        photoImage.setImage(imageUrl: imageUrl)
         
         photoImage.autoPinEdge(toSuperviewSafeArea: .top)
         photoImage.autoPinEdge(.leading, to: .leading, of: view)
@@ -72,9 +74,10 @@ class PhotoDetailViewController: UIViewController {
     }
     
     func configurePhotoTitle() {
-        view.addSubview(photoTitle)
+        guard let title = viewModel?.title else { return }
 
-        photoTitle.text = viewModel!.title.uppercaseFirstLetter()
+        view.addSubview(photoTitle)
+        photoTitle.text = title.uppercaseFirstLetter()
         
         photoTitle.autoPinEdge(.top, to: .bottom, of: photoImage)
         photoTitle.autoPinEdge(.leading, to: .leading, of: view, withOffset: 10.0)
