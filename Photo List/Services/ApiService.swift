@@ -15,7 +15,9 @@ class ApiService {
     func fetchPhotos(completed: @escaping (Result<[Photo], Error>) -> Void) {
         AF.request(self.apiBaseUrl + "/photos").responseDecodable(of: [Photo].self) { response in
             guard let photos = response.value else {
-                completed(.failure(response.error!))
+                if let error = response.error {
+                    completed(.failure(error))
+                }
                 return
             }
             
@@ -23,11 +25,12 @@ class ApiService {
         }
     }
     
-    
     func fetchComments(forPhotoId photoId: Int, completed: @escaping (Result<[Comment], Error>) -> Void) {
         AF.request(self.apiBaseUrl + "/photos/" + String(photoId) + "/comments").responseDecodable(of: [Comment].self) { response in
             guard let comments = response.value else {
-                completed(.failure(response.error!))
+                if let error = response.error {
+                    completed(.failure(error))
+                }
                 return
             }
             

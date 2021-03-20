@@ -47,7 +47,7 @@ class PhotoCell: UITableViewCell {
     func configureViewModel(with viewModel: PhotoCellViewModel) {
         self.viewModel = viewModel
         
-        photoImage.setImage(imageUrl: self.viewModel!.thumbnailUrl)
+        photoImage.setImage(imageUrl: self.viewModel?.thumbnailUrl ?? "")
         photoTitle.text = self.viewModel?.title.uppercaseFirstLetter()
     }
     

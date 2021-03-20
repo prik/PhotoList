@@ -10,13 +10,16 @@ import Foundation
 extension PhotoDetailViewController {
     
     func fetchComments() {
+        guard let photoId = viewModel?.id else { return }
         
         // Don't show 2 loaders simultaneously
-        if !self.commentList.refreshControl!.isRefreshing {
-            LoadingHUD.show(forView: commentList)
+        if let refreshControl = self.commentList.refreshControl {
+            if !refreshControl.isRefreshing {
+                LoadingHUD.show(forView: commentList)
+            }
         }
         
-        ApiService().fetchComments(forPhotoId: viewModel!.id) { [weak self] result in
+        ApiService().fetchComments(forPhotoId: photoId) { [weak self] result in
             guard let self = self else { return }
             
             LoadingHUD.hide(forView: self.commentList)

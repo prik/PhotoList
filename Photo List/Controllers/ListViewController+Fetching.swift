@@ -10,8 +10,10 @@ import Foundation
 extension ListViewController {
     func fetchPhotos() {
         // Don't show 2 loaders simultaneously
-        if !self.photoList.refreshControl!.isRefreshing {
-            LoadingHUD.show(forView: view)
+        if let refreshControl = self.photoList.refreshControl {
+            if !refreshControl.isRefreshing {
+                LoadingHUD.show(forView: view)
+            }
         }
         
         ApiService().fetchPhotos { [weak self] result in

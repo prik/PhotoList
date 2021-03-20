@@ -19,15 +19,22 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PhotoCell.identifier) as! PhotoCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotoCell.identifier) as? PhotoCell else {
+            return UITableViewCell()
+        }
+        
         let viewModel = PhotoCellViewModel(model: photos[indexPath.row])
         cell.configureViewModel(with: viewModel)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let selectedIndexPath = tableView.indexPathForSelectedRow else { return }
+        
         let photoDetail = PhotoDetailViewController()
-        let viewModel = PhotoDetailViewControllerViewModel(model: photos[tableView.indexPathForSelectedRow!.row])
+        let viewModel = PhotoDetailViewControllerViewModel(model: photos[selectedIndexPath.row])
+        
         photoDetail.configureViewModel(with: viewModel)
         navigationController?.pushViewController(photoDetail, animated: true)
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
