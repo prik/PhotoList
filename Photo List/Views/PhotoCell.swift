@@ -55,18 +55,18 @@ class PhotoCell: UITableViewCell {
         addSubview(photoImage)
 
         photoImage.autoAlignAxis(toSuperviewAxis: .horizontal)
-        photoImage.autoPinEdge(.leading, to: .leading, of: self, withOffset: 12.0)
-        photoImage.autoSetDimension(.height, toSize: 80.0)
-        photoImage.autoSetDimension(.width, toSize: 115.0)
+        photoImage.autoPinEdge(.leading, to: .leading, of: self, withOffset: 12)
+        photoImage.autoSetDimension(.height, toSize: 80)
+        photoImage.autoSetDimension(.width, toSize: 115)
     }
 
     private func configurePhotoTitle() {
         addSubview(photoTitle)
         
         photoTitle.autoAlignAxis(toSuperviewAxis: .horizontal)
-        photoTitle.autoPinEdge(.leading, to: .trailing, of: photoImage, withOffset: 20.0)
-        photoTitle.autoSetDimension(.height, toSize: 80.0)
-        photoTitle.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -12.0)
+        photoTitle.autoPinEdge(.leading, to: .trailing, of: photoImage, withOffset: 20)
+        photoTitle.autoSetDimension(.height, toSize: 80)
+        photoTitle.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -12)
     }
     
     override func prepareForReuse() {

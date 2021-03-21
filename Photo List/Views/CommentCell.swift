@@ -16,23 +16,22 @@ class CommentCell: UITableViewCell {
     
     let idLabel: UILabel = {
         let label = UILabel().configureForAutoLayout()
-        label.font = .systemFont(ofSize: 9.0, weight: .light)
+        label.font = .systemFont(ofSize: 9, weight: .light)
         return label
     }()
     
     let nameLabel: UILabel = {
         let label = UILabel().configureForAutoLayout()
-        label.font = .boldSystemFont(ofSize: 12.0)
+        label.font = .boldSystemFont(ofSize: 12)
         return label
     }()
     
     let commentLabel: UILabel = {
         let label = UILabel().configureForAutoLayout()
-        label.font = .systemFont(ofSize: 15.0)
+        label.font = .systemFont(ofSize: 15)
         label.numberOfLines = 0
+        label.sizeToFit()
         label.lineBreakMode = .byTruncatingTail
-        label.adjustsFontSizeToFitWidth = true
-        label.autoresizesSubviews = true
         return label
     }()
     
@@ -62,27 +61,27 @@ class CommentCell: UITableViewCell {
         addSubview(idLabel)
         
         idLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        idLabel.autoPinEdge(.leading, to: .leading, of: contentView)
+        idLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 10)
         idLabel.autoMatch(.height, to: .height, of: contentView)
-        idLabel.autoSetDimension(.width, toSize: 13.0)
+        idLabel.autoSetDimension(.width, toSize: 13)
     }
     
     private func configureNameLabel() {
         addSubview(nameLabel)
 
-        nameLabel.autoPinEdge(.top, to: .top, of: contentView, withOffset: 6.0)
-        nameLabel.autoPinEdge(.leading, to: .trailing, of: idLabel, withOffset: 10.0)
-        nameLabel.autoPinEdge(.trailing, to: .trailing, of: contentView)
-        nameLabel.autoSetDimension(.height, toSize: 15.0)
+        nameLabel.autoPinEdge(.top, to: .top, of: contentView, withOffset: 6)
+        nameLabel.autoPinEdge(.leading, to: .trailing, of: idLabel, withOffset: 10)
+        nameLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -15)
+        nameLabel.autoSetDimension(.height, toSize: 15)
     }
     
     private func configureCommentLabel() {
         addSubview(commentLabel)
         
         commentLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        commentLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 1.0)
-        commentLabel.autoPinEdge(.leading, to: .trailing, of: idLabel, withOffset: 10.0)
-        commentLabel.autoMatch(.width, to: .width, of: contentView, withOffset: -23.0)
+        commentLabel.autoPinEdge(.top, to: .bottom, of: nameLabel)
+        commentLabel.autoPinEdge(.leading, to: .trailing, of: idLabel, withOffset: 10)
+        commentLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -15)
     }
     
     override func prepareForReuse() {

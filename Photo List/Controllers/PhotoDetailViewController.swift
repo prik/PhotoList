@@ -11,33 +11,31 @@ import Alamofire
 class PhotoDetailViewController: UIViewController {
     
     var viewModel: PhotoDetailViewControllerViewModel?
-
+    var headerView = UIView()
+    let photoImage = UIImageView()
     var comments: [Comment] = []
-    var photoImage = UIImageView().configureForAutoLayout()
-    
+
     var photoTitle: UILabel = {
-        let label = UILabel().configureForAutoLayout()
+        let label = UILabel()
         label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 20.0)
+        label.font = .boldSystemFont(ofSize: 20)
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     let commentsLabel: UILabel = {
-        let label = UILabel().configureForAutoLayout()
-        label.font = .systemFont(ofSize: 12.0)
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
         label.textColor = .systemGray3
         return label
     }()
     
     let commentList: UITableView = {
-        let table = UITableView().configureForAutoLayout()
+        let table = UITableView()
         table.allowsSelection = false
         table.separatorStyle = .none
-        table.rowHeight = UITableView.automaticDimension
-        table.rowHeight = 130 // Somehow I cannot get dynamic height to work
-        table.contentInset = UIEdgeInsets.init(top: 5.0, left: 0.0, bottom: 5.0, right: 0.0)
+        table.rowHeight = 125 // Somehow I cannot get dynamic height to work
         table.register(CommentCell.self, forCellReuseIdentifier: CommentCell.identifier)
         return table
     }()
@@ -47,6 +45,7 @@ class PhotoDetailViewController: UIViewController {
         
         view.backgroundColor = .white
     
+        configureHeaderView()
         configurePhotoImage()
         configurePhotoTitle()
         configureCommentList()
@@ -59,48 +58,52 @@ class PhotoDetailViewController: UIViewController {
     func configureViewModel(with viewModel: PhotoDetailViewControllerViewModel) {
         self.viewModel = viewModel
     }
+        
+    func configureHeaderView() {
+        self.headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 393))
+    }
    
     func configurePhotoImage() {
         guard let imageUrl = viewModel?.imageUrl else { return }
 
-        view.addSubview(photoImage)
-
+        headerView.addSubview(photoImage)
         photoImage.setImage(imageUrl: imageUrl)
         
+        photoImage.configureForAutoLayout()
         photoImage.autoPinEdge(toSuperviewSafeArea: .top)
-        photoImage.autoPinEdge(.leading, to: .leading, of: view)
-        photoImage.autoPinEdge(.trailing, to: .trailing, of: view)
-        photoImage.autoSetDimension(.height, toSize: 300.0)
+        photoImage.autoPinEdge(.leading, to: .leading, of: headerView)
+        photoImage.autoPinEdge(.trailing, to: .trailing, of: headerView)
+        photoImage.autoSetDimension(.height, toSize: 300)
     }
     
     func configurePhotoTitle() {
         guard let title = viewModel?.title else { return }
 
-        view.addSubview(photoTitle)
+        headerView.addSubview(photoTitle)
         photoTitle.text = title.uppercaseFirstLetter()
         
         photoTitle.autoPinEdge(.top, to: .bottom, of: photoImage)
-        photoTitle.autoPinEdge(.leading, to: .leading, of: view, withOffset: 10.0)
-        photoTitle.autoPinEdge(.trailing, to: .trailing, of: view, withOffset: -10.0)
-        photoTitle.autoSetDimension(.height, toSize: 80.0)
+        photoTitle.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 10)
+        photoTitle.autoPinEdge(.trailing, to: .trailing, of: headerView, withOffset: -10)
+        photoTitle.autoSetDimension(.height, toSize: 80)
     }
     
     func configureCommentLabel() {
-        view.addSubview(commentsLabel)
-        
+        headerView.addSubview(commentsLabel)
         commentsLabel.text = "Comments"
         
-        commentsLabel.autoPinEdge(.leading, to: .leading, of: view, withOffset: 23.0)
-        commentsLabel.autoPinEdge(.trailing, to: .trailing, of: view)
-        commentsLabel.autoSetDimension(.height, toSize: 13.0)
-        commentsLabel.autoPinEdge(.bottom, to: .top, of: commentList, withOffset: -7.5)
+        commentsLabel.configureForAutoLayout()
+        commentsLabel.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 33)
+        commentsLabel.autoPinEdge(.trailing, to: .trailing, of: headerView)
+        commentsLabel.autoSetDimension(.height, toSize: 13)
+        commentsLabel.autoPinEdge(.bottom, to: .bottom, of: headerView)
     }
     
     func configureCommentList() {
         view.addSubview(commentList)
         
-        commentList.autoPinEdge(.top, to: .bottom, of: photoTitle, withOffset: 15.0)
-        commentList.autoPinEdges(toSuperviewMarginsExcludingEdge: .top)
+        commentList.frame = view.bounds
+        commentList.tableHeaderView = headerView
         
         setCommentListDelegates()
     }
