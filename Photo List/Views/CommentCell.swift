@@ -14,24 +14,25 @@ class CommentCell: UITableViewCell {
     // MARK: - Properties
     private var viewModel: CommentCellViewModel?
     
-    let idLabel: UILabel = {
-        let label = UILabel().configureForAutoLayout()
+    private let idLabel: UILabel = {
+        let label = UILabel()
         label.font = .systemFont(ofSize: 9, weight: .light)
         return label
     }()
     
-    let nameLabel: UILabel = {
-        let label = UILabel().configureForAutoLayout()
+    private let nameLabel: UILabel = {
+        let label = UILabel()
         label.font = .boldSystemFont(ofSize: 12)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
-    let commentLabel: UILabel = {
-        let label = UILabel().configureForAutoLayout()
+    private let commentLabel: UILabel = {
+        let label = UILabel()
         label.font = .systemFont(ofSize: 15)
         label.numberOfLines = 0
-        label.sizeToFit()
-        label.lineBreakMode = .byTruncatingTail
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -60,6 +61,7 @@ class CommentCell: UITableViewCell {
     private func configureIdLabel() {
         addSubview(idLabel)
         
+        idLabel.configureForAutoLayout()
         idLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         idLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 10)
         idLabel.autoMatch(.height, to: .height, of: contentView)
@@ -69,6 +71,7 @@ class CommentCell: UITableViewCell {
     private func configureNameLabel() {
         addSubview(nameLabel)
 
+        nameLabel.configureForAutoLayout()
         nameLabel.autoPinEdge(.top, to: .top, of: contentView, withOffset: 6)
         nameLabel.autoPinEdge(.leading, to: .trailing, of: idLabel, withOffset: 10)
         nameLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -15)
@@ -78,6 +81,7 @@ class CommentCell: UITableViewCell {
     private func configureCommentLabel() {
         addSubview(commentLabel)
         
+        commentLabel.configureForAutoLayout()
         commentLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         commentLabel.autoPinEdge(.top, to: .bottom, of: nameLabel)
         commentLabel.autoPinEdge(.leading, to: .trailing, of: idLabel, withOffset: 10)

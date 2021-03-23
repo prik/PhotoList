@@ -13,7 +13,7 @@ extension PhotoDetailViewController {
         commentList.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
     }
         
-    @objc func handleRefreshControl() {
+    @objc private func handleRefreshControl() {
         fetchComments()
 
         DispatchQueue.main.async {

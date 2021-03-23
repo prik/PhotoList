@@ -13,7 +13,7 @@ extension ListViewController {
         photoList.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
     }
         
-    @objc func handleRefreshControl() {
+    @objc private func handleRefreshControl() {
         fetchPhotos()
 
         self.photoList.refreshControl?.endRefreshing()

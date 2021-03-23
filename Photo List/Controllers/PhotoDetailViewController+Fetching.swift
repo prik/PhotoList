@@ -36,7 +36,7 @@ extension PhotoDetailViewController {
         }
     }
     
-    func updateCommentList(with comments: [Comment]) {
+    private func updateCommentList(with comments: [Comment]) {
         self.comments = comments
         self.comments.sort(by: {$0.id < $1.id}) // Sort ID A-Z
         self.comments = Array(self.comments[...19])

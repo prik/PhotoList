@@ -11,11 +11,11 @@ import Alamofire
 class PhotoDetailViewController: UIViewController {
     
     var viewModel: PhotoDetailViewControllerViewModel?
-    var headerView = UIView()
-    let photoImage = UIImageView()
+    private var headerView = UIView()
+    private let photoImage = UIImageView()
     var comments: [Comment] = []
 
-    var photoTitle: UILabel = {
+    private var photoTitle: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .boldSystemFont(ofSize: 20)
@@ -24,7 +24,7 @@ class PhotoDetailViewController: UIViewController {
         return label
     }()
     
-    let commentsLabel: UILabel = {
+    private let commentsLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.textColor = .systemGray3
@@ -35,7 +35,7 @@ class PhotoDetailViewController: UIViewController {
         let table = UITableView()
         table.allowsSelection = false
         table.separatorStyle = .none
-        table.rowHeight = 125 // Somehow I cannot get dynamic height to work
+        table.rowHeight = 135
         table.register(CommentCell.self, forCellReuseIdentifier: CommentCell.identifier)
         return table
     }()
@@ -59,11 +59,11 @@ class PhotoDetailViewController: UIViewController {
         self.viewModel = viewModel
     }
         
-    func configureHeaderView() {
+    private func configureHeaderView() {
         self.headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 393))
     }
    
-    func configurePhotoImage() {
+    private func configurePhotoImage() {
         guard let imageUrl = viewModel?.imageUrl else { return }
 
         headerView.addSubview(photoImage)
@@ -76,7 +76,7 @@ class PhotoDetailViewController: UIViewController {
         photoImage.autoSetDimension(.height, toSize: 300)
     }
     
-    func configurePhotoTitle() {
+    private func configurePhotoTitle() {
         guard let title = viewModel?.title else { return }
 
         headerView.addSubview(photoTitle)
@@ -88,7 +88,7 @@ class PhotoDetailViewController: UIViewController {
         photoTitle.autoSetDimension(.height, toSize: 80)
     }
     
-    func configureCommentLabel() {
+    private func configureCommentLabel() {
         headerView.addSubview(commentsLabel)
         commentsLabel.text = "Comments"
         
@@ -99,7 +99,7 @@ class PhotoDetailViewController: UIViewController {
         commentsLabel.autoPinEdge(.bottom, to: .bottom, of: headerView)
     }
     
-    func configureCommentList() {
+    private func configureCommentList() {
         view.addSubview(commentList)
         
         commentList.frame = view.bounds
