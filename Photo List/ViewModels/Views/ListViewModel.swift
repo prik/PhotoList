@@ -13,6 +13,7 @@ protocol ListViewModelDelegate {
     func didStartFetchingPhotos()
     func didFinishFetchingPhotos()
     func didFetchPhotosWithSuccess(_ photos: [Photo])
+    func didFetchPhotosWithFailure(_ alert: UIAlertController)
 }
 
 class ListViewModel {
@@ -31,21 +32,18 @@ class ListViewModel {
         ApiService().fetchPhotos { [weak self] result in
             guard let self = self else { return }
             
-            switch result {
-            case .success(let photos):
-                self.photos = photos
-                self.orderPhotosByNameAscending()
-                
-                DispatchQueue.main.async {
-                    self.listViewModelDelegate?.didFetchPhotosWithSuccess(self.photos)
-                }
-            
-            case .failure(_): break
-//                let alert = Alert.error(withMessage: "A problem occurred while fetching the images. Make sure that you are connected to the internet.")
-//                self.present(alert, animated: true)
-            }
-            
             DispatchQueue.main.async {
+                switch result {
+                case .success(let photos):
+                    self.photos = photos
+                    self.orderPhotosByNameAscending()
+                    self.listViewModelDelegate?.didFetchPhotosWithSuccess(self.photos)
+                    
+                case .failure(_):
+                    let alert = Alert.error(withMessage: "A problem occurred while fetching the images. Make sure that you are connected to the internet.")
+                    self.listViewModelDelegate?.didFetchPhotosWithFailure(alert)
+                }
+                
                 self.listViewModelDelegate?.didFinishFetchingPhotos()
             }
         }

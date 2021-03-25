@@ -13,6 +13,7 @@ protocol PhotoDetailViewModelDelegate {
     func didStartFetchingComments()
     func didFinishFetchingComments()
     func didFetchCommentsWithSuccess(_ comments: [Comment])
+    func didFetchCommentsWithFailure(_ alert: UIAlertController)
 }
 
 class PhotoDetailViewModel {
@@ -36,21 +37,23 @@ class PhotoDetailViewModel {
         ApiService().fetchComments(forPhotoId: id) { [weak self] result in
             guard let self = self else { return }
             
-            switch result {
-            case .success(let comments):
-                self.comments = comments
-                self.orderCommentsByIdAscending()
-                self.limitCommentCountToMaxAmount()
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let comments):
+                    self.comments = comments
+                    self.orderCommentsByIdAscending()
+                    self.limitCommentCountToMaxAmount()
 
-                DispatchQueue.main.async {
                     self.photoDetailViewModelDelegate?.didFetchCommentsWithSuccess(self.comments)
+                
+                case .failure(_):
+                    let alert = Alert.error(withMessage: "A problem occurred while fetching the comments. Make sure that you are connected to the internet.")
+                    
+                    self.photoDetailViewModelDelegate?.didFetchCommentsWithFailure(alert)
                 }
-            case .failure(_): break
-//                let alert = Alert.error(withMessage: "A problem occurred while fetching the images. Make sure that you are connected to the internet.")
-//                self.present(alert, animated: true)
+                
+                self.photoDetailViewModelDelegate?.didFinishFetchingComments()
             }
-            
-            self.photoDetailViewModelDelegate?.didFinishFetchingComments()
         }
     }
 

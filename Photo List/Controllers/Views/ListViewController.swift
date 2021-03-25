@@ -88,6 +88,10 @@ extension ListViewController: ListViewModelDelegate {
         self.photos = photos
         photoList.reloadData()
     }
+    
+    func didFetchPhotosWithFailure(_ alert: UIAlertController) {
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - Refresh Control

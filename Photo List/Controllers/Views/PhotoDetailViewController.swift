@@ -143,6 +143,10 @@ extension PhotoDetailViewController: PhotoDetailViewModelDelegate {
         self.comments = comments
         commentList.reloadData()
     }
+    
+    func didFetchCommentsWithFailure(_ alert: UIAlertController) {
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - Refresh Control
