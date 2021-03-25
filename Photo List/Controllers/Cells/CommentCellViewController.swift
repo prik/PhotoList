@@ -12,7 +12,13 @@ class CommentCellViewController: UITableViewCell {
     static let identifier = String(describing: self)
     
     // MARK: - Properties
-    private var viewModel: CommentCellViewModel?
+    internal var viewModel: CommentCellViewModel? {
+        didSet {
+            idLabel.text = viewModel?.id
+            nameLabel.text = viewModel?.name.uppercaseFirstLetter()
+            commentLabel.text = viewModel?.body.uppercaseFirstLetter()
+        }
+    }
     
     private let idLabel: UILabel = {
         let label = UILabel()
@@ -50,14 +56,6 @@ class CommentCellViewController: UITableViewCell {
     }
     
     // MARK: - Configuration
-    func configureViewModel(_ viewModel: CommentCellViewModel) {
-        self.viewModel = viewModel
-        
-        idLabel.text = String(viewModel.id)
-        nameLabel.text = self.viewModel?.name.uppercaseFirstLetter()
-        commentLabel.text = self.viewModel?.body.uppercaseFirstLetter()
-    }
-    
     private func configureIdLabel() {
         addSubview(idLabel)
         

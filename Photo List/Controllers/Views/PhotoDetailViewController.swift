@@ -11,7 +11,7 @@ import NotificationBannerSwift
 
 // MARK: - Main Configuration
 class PhotoDetailViewController: UIViewController {
-    var viewModel: PhotoDetailViewModel?
+    internal var viewModel: PhotoDetailViewModel?
     var comments: [Comment] = []
     private var headerView = UIView()
     private let photoImage = UIImageView()
@@ -57,10 +57,6 @@ class PhotoDetailViewController: UIViewController {
         viewModel?.fetchComments()
     }
     
-    func configureViewModel(_ viewModel: PhotoDetailViewModel) {
-        self.viewModel = viewModel
-    }
-        
     private func configureHeaderView() {
         self.headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 393))
     }
@@ -123,8 +119,7 @@ extension PhotoDetailViewController: UITableViewDelegate, UITableViewDataSource 
             return UITableViewCell()
         }
         
-        let viewModel = CommentCellViewModel(model: comments[indexPath.row])
-        cell.configureViewModel(viewModel)
+        cell.viewModel = CommentCellViewModel(model: comments[indexPath.row])
         
         return cell
     }

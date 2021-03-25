@@ -13,7 +13,12 @@ class PhotoCellViewController: UITableViewCell {
     static let identifier = String(describing: self)
     
     // MARK: - Properties
-    private var viewModel: PhotoCellViewModel?
+    internal var viewModel: PhotoCellViewModel? {
+        didSet {
+            photoImage.setImage(imageUrl: viewModel?.thumbnailUrl)
+            photoTitle.text = viewModel?.title.uppercaseFirstLetter()
+        }
+    }
     
     var photoImage: UIImageView = {
         let image = UIImageView().configureForAutoLayout()
@@ -44,13 +49,6 @@ class PhotoCellViewController: UITableViewCell {
     }
     
     // MARK: - Configuration
-    func configureViewModel(_ viewModel: PhotoCellViewModel) {
-        self.viewModel = viewModel
-        
-        photoImage.setImage(imageUrl: self.viewModel?.thumbnailUrl)
-        photoTitle.text = self.viewModel?.title.uppercaseFirstLetter()
-    }
-    
     private func configurePhotoImage() {
         addSubview(photoImage)
 

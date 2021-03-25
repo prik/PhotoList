@@ -57,8 +57,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
-        let viewModel = PhotoCellViewModel(model: photos[indexPath.row])
-        cell.configureViewModel(viewModel)
+        cell.viewModel = PhotoCellViewModel(model: photos[indexPath.row])
         
         return cell
     }
@@ -67,9 +66,8 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         guard let selectedIndexPath = tableView.indexPathForSelectedRow else { return }
         
         let photoDetail = PhotoDetailViewController()
-        let viewModel = PhotoDetailViewModel(model: photos[selectedIndexPath.row])
         
-        photoDetail.configureViewModel(viewModel)
+        photoDetail.viewModel = PhotoDetailViewModel(model: photos[selectedIndexPath.row])
         navigationController?.pushViewController(photoDetail, animated: true)
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
     }
