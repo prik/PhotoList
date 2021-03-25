@@ -109,6 +109,6 @@ extension ListViewController {
         
     @objc private func handleRefreshControl() {
         viewModel.fetchPhotos()
-        self.photoList.refreshControl?.endRefreshing()
+        photoList.refreshControl?.endRefreshing()
     }
 }

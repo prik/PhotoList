@@ -66,7 +66,7 @@ class PhotoDetailViewController: UIViewController {
     }
     
     private func configureHeaderView() {
-        self.headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 393))
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 393))
     }
    
     private func configurePhotoImage() {
