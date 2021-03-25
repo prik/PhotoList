@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NotificationBannerSwift
 
 // MARK: - Main Configuration
 class ListViewController: UIViewController {
@@ -89,8 +90,9 @@ extension ListViewController: ListViewModelDelegate {
         photoList.reloadData()
     }
     
-    func didFetchPhotosWithFailure(_ alert: UIAlertController) {
-        present(alert, animated: true)
+    func didFetchPhotosWithFailure(message: String) {
+        let notification = GrowingNotificationBanner.init(title: "Error", subtitle: message, style: .danger)
+        notification.show()
     }
 }
 

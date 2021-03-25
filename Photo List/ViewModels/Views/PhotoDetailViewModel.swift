@@ -13,7 +13,7 @@ protocol PhotoDetailViewModelDelegate {
     func didStartFetchingComments()
     func didFinishFetchingComments()
     func didFetchCommentsWithSuccess(_ comments: [Comment])
-    func didFetchCommentsWithFailure(_ alert: UIAlertController)
+    func didFetchCommentsWithFailure(message: String)
 }
 
 class PhotoDetailViewModel {
@@ -47,9 +47,8 @@ class PhotoDetailViewModel {
                     self.photoDetailViewModelDelegate?.didFetchCommentsWithSuccess(self.comments)
                 
                 case .failure(_):
-                    let alert = Alert.error(withMessage: "A problem occurred while fetching the comments. Make sure that you are connected to the internet.")
-                    
-                    self.photoDetailViewModelDelegate?.didFetchCommentsWithFailure(alert)
+                    let message = "Something went wrong while fetching the comments. Make sure that you are connected to the internet."
+                    self.photoDetailViewModelDelegate?.didFetchCommentsWithFailure(message: message)
                 }
                 
                 self.photoDetailViewModelDelegate?.didFinishFetchingComments()

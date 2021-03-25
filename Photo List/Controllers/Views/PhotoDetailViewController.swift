@@ -7,6 +7,7 @@
 
 import UIKit
 import PureLayout
+import NotificationBannerSwift
 
 // MARK: - Main Configuration
 class PhotoDetailViewController: UIViewController {
@@ -144,8 +145,9 @@ extension PhotoDetailViewController: PhotoDetailViewModelDelegate {
         commentList.reloadData()
     }
     
-    func didFetchCommentsWithFailure(_ alert: UIAlertController) {
-        present(alert, animated: true)
+    func didFetchCommentsWithFailure(message: String) {
+        let notification = GrowingNotificationBanner.init(title: "Error", subtitle: message, style: .danger)
+        notification.show()
     }
 }
 

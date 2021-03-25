@@ -13,7 +13,7 @@ protocol ListViewModelDelegate {
     func didStartFetchingPhotos()
     func didFinishFetchingPhotos()
     func didFetchPhotosWithSuccess(_ photos: [Photo])
-    func didFetchPhotosWithFailure(_ alert: UIAlertController)
+    func didFetchPhotosWithFailure(message: String)
 }
 
 class ListViewModel {
@@ -40,8 +40,8 @@ class ListViewModel {
                     self.listViewModelDelegate?.didFetchPhotosWithSuccess(self.photos)
                     
                 case .failure(_):
-                    let alert = Alert.error(withMessage: "A problem occurred while fetching the images. Make sure that you are connected to the internet.")
-                    self.listViewModelDelegate?.didFetchPhotosWithFailure(alert)
+                    let message = "Something went wrong while fetching the images. Make sure that you are connected to the internet."
+                    self.listViewModelDelegate?.didFetchPhotosWithFailure(message: message)
                 }
                 
                 self.listViewModelDelegate?.didFinishFetchingPhotos()

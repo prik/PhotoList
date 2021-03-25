@@ -9,5 +9,6 @@ target 'Photo List' do
   pod 'Alamofire', '~> 5.2'
   pod 'Kingfisher', '~> 6.0'
   pod 'MBProgressHUD', '~> 1.0'
+  pod 'NotificationBannerSwift', '~> 3.0.0'
 
 end
