@@ -10,8 +10,7 @@ import NotificationBannerSwift
 
 // MARK: - Main Configuration
 class ListViewController: UIViewController {
-    var viewModel: ListViewModel?
-    var photos: [Photo] = []
+    var viewModel: ListViewModel
     var refreshControl: UIRefreshControl?
     
     let photoList: UITableView = {
@@ -22,8 +21,16 @@ class ListViewController: UIViewController {
         return table
     }()
     
+    init(withViewModel model: ListViewModel) {
+        viewModel = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
-        guard let viewModel = viewModel else { return }
         super.viewDidLoad()
         
         configurePhotoList()
@@ -34,7 +41,7 @@ class ListViewController: UIViewController {
     }
     
     private func configurePhotoList() {
-        title = viewModel?.menuTitle
+        title = viewModel.menuTitle
         photoList.frame = view.bounds
         view.addSubview(photoList)
         setTableViewDelegates()
@@ -49,7 +56,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
+        return viewModel.photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,7 +64,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
-        cell.viewModel = PhotoCellViewModel(model: photos[indexPath.row])
+        cell.viewModel = PhotoCellViewModel(model: viewModel.photos[indexPath.row])
         
         return cell
     }
@@ -65,9 +72,9 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedIndexPath = tableView.indexPathForSelectedRow else { return }
         
-        let photoDetail = PhotoDetailViewController()
+        let photoDetailViewModel = PhotoDetailViewModel(model: viewModel.photos[selectedIndexPath.row])
+        let photoDetail = PhotoDetailViewController(withViewModel: photoDetailViewModel)
         
-        photoDetail.viewModel = PhotoDetailViewModel(model: photos[selectedIndexPath.row])
         navigationController?.pushViewController(photoDetail, animated: true)
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
     }
@@ -84,7 +91,6 @@ extension ListViewController: ListViewModelDelegate {
     }
     
     func didFetchPhotosWithSuccess(_ photos: [Photo]) {
-        self.photos = photos
         photoList.reloadData()
     }
     
@@ -102,7 +108,7 @@ extension ListViewController {
     }
         
     @objc private func handleRefreshControl() {
-        viewModel?.fetchPhotos()
+        viewModel.fetchPhotos()
         self.photoList.refreshControl?.endRefreshing()
     }
 }

@@ -19,8 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let listViewModel = ListViewModel(menuTitle: "Photo List")
-        let listViewController = ListViewController()
-        listViewController.viewModel = listViewModel
+        let listViewController = ListViewController(withViewModel: listViewModel)
         let navigationController = UINavigationController(rootViewController: listViewController)
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)

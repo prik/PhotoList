@@ -11,8 +11,7 @@ import NotificationBannerSwift
 
 // MARK: - Main Configuration
 class PhotoDetailViewController: UIViewController {
-    internal var viewModel: PhotoDetailViewModel?
-    var comments: [Comment] = []
+    internal var viewModel: PhotoDetailViewModel
     private var headerView = UIView()
     private let photoImage = UIImageView()
 
@@ -41,6 +40,15 @@ class PhotoDetailViewController: UIViewController {
         return table
     }()
     
+    init(withViewModel model: PhotoDetailViewModel) {
+        viewModel = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,8 +61,8 @@ class PhotoDetailViewController: UIViewController {
         configureCommentLabel()
         configureRefreshControl()
         
-        viewModel?.photoDetailViewModelDelegate = self
-        viewModel?.fetchComments()
+        viewModel.photoDetailViewModelDelegate = self
+        viewModel.fetchComments()
     }
     
     private func configureHeaderView() {
@@ -63,7 +71,7 @@ class PhotoDetailViewController: UIViewController {
    
     private func configurePhotoImage() {
         headerView.addSubview(photoImage)
-        photoImage.setImage(imageUrl: viewModel?.imageUrl)
+        photoImage.setImage(imageUrl: viewModel.imageUrl)
         
         photoImage.configureForAutoLayout()
         photoImage.autoPinEdge(toSuperviewSafeArea: .top)
@@ -74,7 +82,7 @@ class PhotoDetailViewController: UIViewController {
     
     private func configurePhotoTitle() {
         headerView.addSubview(photoTitle)
-        photoTitle.text = viewModel?.title.uppercaseFirstLetter()
+        photoTitle.text = viewModel.title.uppercaseFirstLetter()
         
         photoTitle.autoPinEdge(.top, to: .bottom, of: photoImage)
         photoTitle.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 10)
@@ -111,7 +119,7 @@ extension PhotoDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        comments.count
+        viewModel.comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -119,7 +127,7 @@ extension PhotoDetailViewController: UITableViewDelegate, UITableViewDataSource 
             return UITableViewCell()
         }
         
-        cell.viewModel = CommentCellViewModel(model: comments[indexPath.row])
+        cell.viewModel = CommentCellViewModel(model: viewModel.comments[indexPath.row])
         
         return cell
     }
@@ -136,7 +144,6 @@ extension PhotoDetailViewController: PhotoDetailViewModelDelegate {
     }
     
     func didFetchCommentsWithSuccess(_ comments: [Comment]) {
-        self.comments = comments
         commentList.reloadData()
     }
     
@@ -154,7 +161,7 @@ extension PhotoDetailViewController {
     }
         
     @objc private func handleRefreshControl() {
-        viewModel?.fetchComments()
+        viewModel.fetchComments()
 
         DispatchQueue.main.async {
             self.commentList.refreshControl?.endRefreshing()
