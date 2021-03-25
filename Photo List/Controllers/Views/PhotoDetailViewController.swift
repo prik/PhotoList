@@ -6,14 +6,14 @@
 //
 
 import UIKit
-import Alamofire
+import PureLayout
 
+// MARK: - Main Configuration
 class PhotoDetailViewController: UIViewController {
-    
-    var viewModel: PhotoDetailViewControllerViewModel?
+    var viewModel: PhotoDetailViewModel?
+    var comments: [Comment] = []
     private var headerView = UIView()
     private let photoImage = UIImageView()
-    var comments: [Comment] = []
 
     private var photoTitle: UILabel = {
         let label = UILabel()
@@ -36,7 +36,7 @@ class PhotoDetailViewController: UIViewController {
         table.allowsSelection = false
         table.separatorStyle = .none
         table.rowHeight = 135
-        table.register(CommentCell.self, forCellReuseIdentifier: CommentCell.identifier)
+        table.register(CommentCellViewController.self, forCellReuseIdentifier: CommentCellViewController.identifier)
         return table
     }()
     
@@ -52,10 +52,11 @@ class PhotoDetailViewController: UIViewController {
         configureCommentLabel()
         configureRefreshControl()
         
-        fetchComments()
+        viewModel?.photoDetailViewModelDelegate = self
+        viewModel?.fetchComments()
     }
     
-    func configureViewModel(with viewModel: PhotoDetailViewControllerViewModel) {
+    func configureViewModel(_ viewModel: PhotoDetailViewModel) {
         self.viewModel = viewModel
     }
         
@@ -64,10 +65,8 @@ class PhotoDetailViewController: UIViewController {
     }
    
     private func configurePhotoImage() {
-        guard let imageUrl = viewModel?.imageUrl else { return }
-
         headerView.addSubview(photoImage)
-        photoImage.setImage(imageUrl: imageUrl)
+        photoImage.setImage(imageUrl: viewModel?.imageUrl)
         
         photoImage.configureForAutoLayout()
         photoImage.autoPinEdge(toSuperviewSafeArea: .top)
@@ -77,10 +76,8 @@ class PhotoDetailViewController: UIViewController {
     }
     
     private func configurePhotoTitle() {
-        guard let title = viewModel?.title else { return }
-
         headerView.addSubview(photoTitle)
-        photoTitle.text = title.uppercaseFirstLetter()
+        photoTitle.text = viewModel?.title.uppercaseFirstLetter()
         
         photoTitle.autoPinEdge(.top, to: .bottom, of: photoImage)
         photoTitle.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 10)
@@ -107,6 +104,59 @@ class PhotoDetailViewController: UIViewController {
         
         setCommentListDelegates()
     }
-    
 }
 
+// MARK: - TableView Delegate Methods
+extension PhotoDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    private func setCommentListDelegates() {
+        commentList.delegate = self
+        commentList.dataSource = self
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        comments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentCellViewController.identifier) as? CommentCellViewController else {
+            return UITableViewCell()
+        }
+        
+        let viewModel = CommentCellViewModel(model: comments[indexPath.row])
+        cell.configureViewModel(viewModel)
+        
+        return cell
+    }
+}
+
+// MARK: - ViewModel Delegate Methods
+extension PhotoDetailViewController: PhotoDetailViewModelDelegate {
+    func didStartFetchingComments() {
+        LoadingHUD.show(forView: commentList)
+    }
+    
+    func didFinishFetchingComments() {
+        LoadingHUD.hide(forView: commentList)
+    }
+    
+    func didFetchCommentsWithSuccess(_ comments: [Comment]) {
+        self.comments = comments
+        commentList.reloadData()
+    }
+}
+
+// MARK: - Refresh Control
+extension PhotoDetailViewController {
+    private func configureRefreshControl() {
+        commentList.refreshControl = UIRefreshControl()
+        commentList.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+        
+    @objc private func handleRefreshControl() {
+        viewModel?.fetchComments()
+
+        DispatchQueue.main.async {
+            self.commentList.refreshControl?.endRefreshing()
+        }
+    }
+}

@@ -1,5 +1,5 @@
 //
-//  PhotoCell.swift
+//  PhotoCellViewController.swift
 //  Photo List
 //
 //  Created by Nick Koster on 04/03/2021.
@@ -8,7 +8,7 @@
 import UIKit
 import PureLayout
 
-class PhotoCell: UITableViewCell {
+class PhotoCellViewController: UITableViewCell {
     
     static let identifier = String(describing: self)
     
@@ -44,10 +44,10 @@ class PhotoCell: UITableViewCell {
     }
     
     // MARK: - Configuration
-    func configureViewModel(with viewModel: PhotoCellViewModel) {
+    func configureViewModel(_ viewModel: PhotoCellViewModel) {
         self.viewModel = viewModel
         
-        photoImage.setImage(imageUrl: self.viewModel?.thumbnailUrl ?? "")
+        photoImage.setImage(imageUrl: self.viewModel?.thumbnailUrl)
         photoTitle.text = self.viewModel?.title.uppercaseFirstLetter()
     }
     

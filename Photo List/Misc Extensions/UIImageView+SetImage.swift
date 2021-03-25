@@ -9,7 +9,12 @@ import UIKit
 import Kingfisher
 
 extension UIImageView {
-    func setImage(imageUrl: String) {
+    func setImage(imageUrl: String?) {
+        guard let imageUrl = imageUrl else {
+            self.image = UIImage(systemName: "wifi.slash")
+            return
+        }
+        
         self.kf.indicatorType = .activity // Show a spinner while loading
         self.kf.setImage(with: URL(string: imageUrl)) { result in
             switch result {

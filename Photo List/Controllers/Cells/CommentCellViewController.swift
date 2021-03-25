@@ -1,14 +1,14 @@
 //
-//  CommentCell.swift
+//  CommentCellViewController.swift
 //  Photo List
 //
 //  Created by Nick Koster on 06/03/2021.
 //
 
 import UIKit
+import PureLayout
 
-class CommentCell: UITableViewCell {
-    
+class CommentCellViewController: UITableViewCell {
     static let identifier = String(describing: self)
     
     // MARK: - Properties
@@ -50,7 +50,7 @@ class CommentCell: UITableViewCell {
     }
     
     // MARK: - Configuration
-    func configureViewModel(with viewModel: CommentCellViewModel) {
+    func configureViewModel(_ viewModel: CommentCellViewModel) {
         self.viewModel = viewModel
         
         idLabel.text = String(viewModel.id)
