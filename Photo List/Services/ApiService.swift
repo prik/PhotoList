@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class ApiService {
+class ApiService: ApiServiceProtocol {
     
     private let apiBaseUrl = "https://jsonplaceholder.typicode.com"
     

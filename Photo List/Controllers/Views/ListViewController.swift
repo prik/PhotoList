@@ -72,7 +72,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedIndexPath = tableView.indexPathForSelectedRow else { return }
         
-        let photoDetailViewModel = PhotoDetailViewModel(model: viewModel.photos[selectedIndexPath.row])
+        let photoDetailViewModel = PhotoDetailViewModel(model: viewModel.photos[selectedIndexPath.row], apiService: ApiService())
         let photoDetail = PhotoDetailViewController(withViewModel: photoDetailViewModel)
         
         navigationController?.pushViewController(photoDetail, animated: true)

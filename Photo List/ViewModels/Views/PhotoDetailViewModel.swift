@@ -18,23 +18,26 @@ protocol PhotoDetailViewModelDelegate {
 
 class PhotoDetailViewModel {
     var photoDetailViewModelDelegate: PhotoDetailViewModelDelegate?
-    let maxCommentsToBeShown = 20
+    let apiService: ApiServiceProtocol
+    let maxCommentsToBeShown: Int
     
     let id: Int
     let title: String
     let imageUrl: String
     var comments: [Comment] = []
     
-    init(model: Photo) {
+    init(model: Photo, apiService: ApiServiceProtocol, maxCommentsToBeShown: Int = 20) {
         id = model.id
         title = model.title
         imageUrl = model.imageUrl
+        self.apiService = apiService
+        self.maxCommentsToBeShown = maxCommentsToBeShown
     }
     
     func fetchComments() {
         startLoading()
         
-        ApiService().fetchComments(forPhotoId: id) { [weak self] result in
+        apiService.fetchComments(forPhotoId: id) { [weak self] result in
             guard let self = self else { return }
             
             DispatchQueue.main.async {

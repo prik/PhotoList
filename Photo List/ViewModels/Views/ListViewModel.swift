@@ -18,18 +18,20 @@ protocol ListViewModelDelegate {
 
 class ListViewModel {
     var listViewModelDelegate: ListViewModelDelegate?
+    let apiService: ApiServiceProtocol
     
     var menuTitle: String
     var photos: [Photo] = []
     
-    init(menuTitle: String) {
+    init(menuTitle: String, apiService: ApiServiceProtocol) {
         self.menuTitle = menuTitle
+        self.apiService = apiService
     }
     
     func fetchPhotos() {
         startLoading()
         
-        ApiService().fetchPhotos { [weak self] result in
+        apiService.fetchPhotos { [weak self] result in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
